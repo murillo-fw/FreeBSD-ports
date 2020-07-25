@@ -1,7 +1,11 @@
 /*
  * tables.c
  *
- * part of pfSense (https://www.pfsense.org)
+ * part of Murillo (https://murillo.saggis.com)
+ * Copyright (c) 2020 Saggi, LLC
+ * All rights reserved
+ * 
+ * originally from pfSense (https://www.pfsense.org)
  * Copyright (c) 2009-2018 Rubicon Communications, LLC (Netgate)
  * All rights reserved.
  *

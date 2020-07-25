@@ -1,7 +1,11 @@
 /*
  * dhcpleases.c
  *
- * part of pfSense (https://www.pfsense.org)
+ * part of Murillo (https://murillo.saggis.com)
+ * Copyright (c) 2020 Saggi, LLC
+ * All rights reserved
+ * 
+ * originally from pfSense (https://www.pfsense.org)
  * Copyright (c) 2010-2020 Rubicon Communications, LLC (Netgate)
  * All rights reserved.
  *
