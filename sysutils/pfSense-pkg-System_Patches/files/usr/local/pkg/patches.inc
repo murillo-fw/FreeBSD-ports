@@ -24,7 +24,7 @@
  */
 require_once("globals.inc");
 require_once("util.inc");
-require_once("pfsense-utils.inc");
+require_once("murillo-utils.inc");
 
 global $git_root_url, $patch_suffix, $patch_dir, $patch_cmd;
 $git_root_url = "https://github.com/pfsense/pfsense/commit/";
@@ -87,7 +87,7 @@ function patch_fetch(& $patch) {
 	$temp_filename = tempnam("{$g['tmp_path']}/", "system_patches");
 	/*
 	 * Backwards compatibility with older 2.1.x pfSense versions
-	 * that did not contain download_file() function in pfsense-utils.inc
+	 * that did not contain download_file() function in murillo-utils.inc
 	 */
 	if (!function_exists("download_file")) {
 		download_file_with_progress_bar($url, $temp_filename);

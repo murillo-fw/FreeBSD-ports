@@ -8,7 +8,7 @@
 ###
 
 require_once("/etc/inc/interfaces.inc");
-require_once("/etc/inc/pfsense-utils.inc");
+require_once("/etc/inc/murillo-utils.inc");
 
 $options = getopt("i:p:r:");
 
