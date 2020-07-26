@@ -2,7 +2,11 @@
 /*
  * haproxy_pool_edit.php
  *
- * part of pfSense (https://www.pfsense.org)
+ * part of Murillo (https://murillo.saggis.com)
+ * Copyright (c) 2020 Saggi, LLC
+ * All rights reserved
+ * 
+ * originally from pfSense (https://www.pfsense.org)
  * Copyright (c) 2009-2020 Rubicon Communications, LLC (Netgate)
  * Copyright (c) 2013-2015 PiBa-NL
  * Copyright (c) 2008 Remco Hoef <remcoverhoef@pfsense.com>
