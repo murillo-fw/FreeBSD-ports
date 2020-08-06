@@ -121,7 +121,7 @@ $geoip_tmppath = "{$g['tmp_path']}/geoipup/";
 
 // If auto-updates of GeoIP are disabled, then exit
 if ($config['installedpackages']['suricata']['config'][0]['autogeoipupdate'] == "off")
-	exit(0);
+	return;
 else
 	syslog(LOG_NOTICE, gettext("[Suricata] Checking for updated MaxMind GeoLite2 IP database file..."));
 
@@ -157,7 +157,7 @@ if (suricata_download_geoip_file($md5file_url, $md5file, $result) && ($result ==
 
 			// Cleanup the tmp directory path
 			rmdir_recursive("$geoip_tmppath");
-			exit(0);
+			return;
 		} else {
 			syslog(LOG_NOTICE, "[Suricata] A new GeoLite2-Country IP database is available.");
 			syslog(LOG_NOTICE, "[Suricata] Downloading new GeoLite2-Country IP database...");
@@ -165,7 +165,7 @@ if (suricata_download_geoip_file($md5file_url, $md5file, $result) && ($result ==
 	}
 } else {
 	syslog(LOG_ERR, "[Suricata] ERROR: GeoLite2-Country IP database update check failed. The GeoIP database was not updated!");
-	exit(0);
+	return;
 }
 
 // If we get this far, then we either have no local DB file
