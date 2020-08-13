@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<pfsensepkgs>
+  <package>
+    <name>captiveAlias</name>
+    <website>http://murillo.saggis.com</website>
+    <descr><![CDATA[Convert captive portal connections into firewall aliases]]></descr>
+    <pkginfolink>https://kb.murillo.saggis.com</pkginfolink>
+    <version>%%PKGVERSION%%</version>
+    <configurationfile>captivealias.xml</configurationfile>
+  </package>
+</pfsensepkgs>

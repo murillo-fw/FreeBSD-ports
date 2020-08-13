@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<packagegui>
+  <name>captiveAlias</name>
+  <version>0.0.1</version>
+  <title>Captive Alias</title>
+  <include_file>/usr/local/pkg/captivealias.inc</include_file>
+  <backup_file></backup_file>
+  <aftersaveredirect></aftersaveredirect>
+  <configpath></configpath>
+  <menu>
+    <name>Captive Alias</name>
+    <section>Services</section>
+    <tooltiptext>Modify Captive Alias settings</tooltiptext>
+    <url>/pkg_edit.php?xml=captivealias.xml&amp;act=edit&amp;id=0</url>
+  </menu>
+  <tabs>
+    <tab>
+      <text>General</text>
+      <url>/pkg_edit.php?xml=captivealias.xml&amp;id=0</url>
+       <active/>
+       <tab_level/>
+    </tab>
+  </tabs>
+  <field>
+    <fielddescr>Enable CaptiveAlias</fielddescr>
+    <fieldname>enable_captivealias</fieldname>
+    <description>Check to enable CaptiveAlias</description>
+    <type>checkbox</type>
+  </field>
+  <custom_php_resync_config_command>
+    cativealias_update_aliases();
+  </custom_php_resync_config_command>
+</packagegui>
