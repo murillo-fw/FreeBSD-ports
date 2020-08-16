@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html><head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Captive Portal Login Page</title>
+  <style>
+	  #content,.login,.login-card a,.login-card h1,.login-help{text-align:center}body,html{margin:0;padding:0;width:100%;height:100%;display:table}#content{font-family:'Source Sans Pro',sans-serif;background-color:#212121;display:table-cell;vertical-align:middle}.login-card{padding:40px;width:280px;background-color:#F7F7F7;margin:100px auto 10px;border-radius:2px;box-shadow:0 2px 2px rgba(0,0,0,.3);overflow:hidden}.login-card h1{font-weight:400;font-size:2.3em;color:#1383c6}.login-card h1 span{color:#f26721}.login-card img{width:70%;height:70%}.login-card input[type=submit]{width:100%;display:block;margin-bottom:10px;position:relative}.login-card input[type=text],input[type=password]{height:44px;font-size:16px;width:100%;margin-bottom:10px;-webkit-appearance:none;background:#fff;border:1px solid #d9d9d9;border-top:1px solid silver;padding:0 8px;box-sizing:border-box;-moz-box-sizing:border-box}.login-card input[type=text]:hover,input[type=password]:hover{border:1px solid #b9b9b9;border-top:1px solid #a0a0a0;-moz-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1);box-shadow:inset 0 1px 2px rgba(0,0,0,.1)}.login{font-size:14px;font-family:Arial,sans-serif;font-weight:700;height:36px;padding:0 8px}.login-submit{-webkit-appearance:none;-moz-appearance:none;appearance:none;border:0;color:#fff;text-shadow:0 1px rgba(0,0,0,.1);background-color:#4d90fe}.login-submit:disabled{opacity:.6}.login-submit:hover{border:0;text-shadow:0 1px rgba(0,0,0,.3);background-color:#357ae8}.login-card a{text-decoration:none;color:#222;font-weight:400;display:inline-block;opacity:.6;transition:opacity ease .5s}.login-card a:hover{opacity:1}.login-help{width:100%;font-size:12px}.list{list-style-type:none;padding:0}.list__item{margin:0 0 .7rem;padding:0}label{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;text-align:left;font-size:14px;}input[type=checkbox]{-webkit-box-flex:0;-webkit-flex:none;-ms-flex:none;flex:none;margin-right:10px;float:left}@media screen and (max-width:450px){.login-card{width:70%!important}.login-card img{width:30%;height:30%}}textarea{width:66%;margin:auto;height:120px;max-height:120px;background-color:#f7f7f7;padding:20px}#terms{display:none;padding-top:100px;padding-bottom:300px;}.auth_source{border: 1px solid lightgray; padding:20px 8px 0px 8px; margin-top: -2em; border-radius: 2px; }.auth_head{background-color:#f7f7f7;display:inline-block;}.auth_head_div{text-align:left;}#error-message{text-align:left;color:#ff3e3e;font-style:italic;}
+  </style>
+</head>
+
+<body>
+<div id="content">
+	<div class="login-card">
+		<img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAT4AAABDCAYAAAAF82mbAAAACXBIWXMAAB7CAAAewgFu0HU+AAAA
+GXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAADRZJREFUeJztnXmQVNUVh78hM+ig
+IG6Ixg1RTFA0alxiLNCoGKOlhYlLxFiaWImaiHEPKgaJGMFtVEwq0UgW9yQas4j7vgZULBUXEiGo
+IShIlMgo4Ez++M0UwzDT/e55973XPX2+qi6qoM+9Z+h+Z8499yzgONXNDsAVwPPAQmAFsAB4CpgI
+bFWcao7jOHHpB9wItACtJV4rgGuAxmLUdBzHicM6wExKG7zOr4eBNYtQ1qk86opWwHEM3A4cbpC7
+Ajgj4P2fA/oG7jEXeC/g/esCWwfu0Qy8HCjjOE4Vswthnl7H1zJgo4C9njDscVLgz3OEYY9XA/dw
+OtGraAUcJxCLp9dOA3BwLEWc6sUNn1NtDEspPySKFk5VUw/cRvJY353ALdmpE5UG4BfA2gnffwv6
++ZzKJjTm1pmGKFo4VU09OjokNXwHAI8A87NSKCKnAscHvH8mbviqgQUp5d+KooVT1YQedfsBP81C
+kcgMBM4PlPEb7urgsZTyD0bRwqlqLDG+Y4ERsRWJzGUo18vpedwGLDHKPgu8FFEXp0qxGL46YAqV
+Gyv5MnC0Qc49vurgXeBcg9wnwBiUDuLUONZb3e2B78dUJBKfAa7FZsTc8FUPU1DIJakRawZGA3/P
+TCOnqkiTzjIB2CSWIpE4GdjRKOuGr7o4FziU8hUM9wG7A3/MXCOnaqhPIdsXmAwcE0mXtKwP/Lho
+JZxc+QvwV2BXYB9gc6A/6tIyGxm9NwrTzqlY0hg+0PHhBuChCLqkZTIyflbc46tOWtER1o+xTmJi
+VG5cQ/EXHV8Ejku5hhs+x6kRYhi+oShZuCh6oQsNL79zHCcRsYzFhcAWkdYK5QRgtwjruMfnODVC
+LMPXB8XY8mZd4KJIa7nhc5waIe3lRkeOAH4NTIu4ZjkmAhvmuJ8TnyEoBWkrdCu7NsrHrJRsAUef
+yc7AYGAQ6mm4FtC77d8XA0uBOW2vF4F5+asZRrmZBSGvN4A1ctJ7JzRPIZbuPzHocLFhn5sM+5Ti
+9wYdxgfuMdywx5HdrFUPHIjmZSzoRnZpGX12NOjzadBPLGq1EWkdsAdwKTJilufsHeBW9D1I21En
+OjE9PoBtgNPJvpFBHdCEPIOYazrZ0YC65YwFtixWFacb1gO+g4z3oJRrbYKM3pGocuZmVHEzM+W6
+UcjiJnQc2X+xj0VeSEzc8GXHMOAZ1B9xy2JVcbqgD3AOOqZOJr3R60wjMqgvAPeTvplsarIwfI1o
+qEtW9KU6WmM5YjQwA8WInMpjJPAacAlqO5c1+6EZyBMoMP83q9y3UcBBGa19IbBxBuu6xxefE4Hf
+sTII7lQO9cDVwD3AZgXsPQ6dArbMeW8g26Tfq4g/x3Qo8IPIa7bjhi8uB6CqHv9/rTzWAe4GTqHY
+z2dn1CPxS3lvnKXhGwycHXnNLPsA+gMal+OJf3nmpKcfat6wf9GKtDEAeID4MfuSZF3m9SOUnxWD
+o1AHDsdxbKyBPL0YlU4x6QP8GXtLuWCyNnyNqI42LX1Q8DVL3ONzejpTUIfySmQd4C7SdVhKTB6F
+/V8FDkm5xjiyrwV2w+f0ZI5Gde2VzBYo5SlzLIbvE4NME/L+LAxBSdEh3G7Yxw2f01NZHz2DaXkV
+uBx1vt4dxfGHoRSV01COnsU+dOTrpHeUymIJPr+J2n0fHiAzCGXsX2DYr4mwdIgZwFRUCuRULu8B
+jwPT0QCh91H5ZD8U2nDiMZ50Ne3TgfOQYeuKl9HYziZgU/Scp7ncuhLV/C83ypfFqtipKPExZITj
+OahO9fUAmVGorjMpLWgIUv8AmXbc48uHJ4FJqGV8a8G61AIDUdWElauRN9eS8P1vA99FDUvuRLe2
+oWyFmlRMNcgmwhrjm094UX9v9J+YlEbkVofwS9SC3PJAueHLlo/RA7gXmpXhRi8fxmAPM52AnJyk
+Rq8jT6H8vPnGvc80yiUizeXGVahzQwgjgcMSvvccwmoG30eXIOAPVaWxBN0m3lC0IjVGL+ztva4E
+fpVy/zdRzM5yZB2KRkpkQhrDtwIdK0ONTBPq71WKzYGzAtcdi6ZrWXGPLxtakaf3fNGK1CDDsZWj
+vY4cjxg8jYyohW9G0mE10qazPInO8iFshgKlpbiGsAD3c6z628mPupXDLahnoJM/+xnlJhL3YuFS
+4H8GuX0j6rAKMfL4ziLc0zod+Hw3/zaSsOvsFlS/a2k02RE3fPFpxTvpFMneBpn56JdVTBaifnyh
+7ABsEFkXII7hWwScHyjTG3l1Xf19yAUIKG70TKe/8xhfZfAoSnVwimF7g8z9KIwVm3sNMnXAdrEV
+gXiVG9ehs3wI+7J6e/IzgW0D1lgMnBu4b3e4xxefh4tWoIYZSFi6WTsPxlakjYex3Q4Pia0IxDN8
+LcD3CP9N0cTKD2dTdEERwvkoEbYzHuOrDB4tWoEaZlOj3BtRtVjJYrp+Vsth/TlKErNW9yXgZ4Ey
+A1l5TL6C8re9HXmB7uv6/KhbGcwuWoEaxjrg592oWqyKxfCF2ITExG5ScAHhCYunoiTLkBK4Vkpf
+aFgMXx4NG7KgknvevV+0AjWMNWl5cVQtVmWRQaYqDN8HhGdcN6Bk6BB+gzLDq5HYR2pLeV4eNKNq
+DacYlhnl1oqqxapYvNBMvkNZeDk3k12AFOBD4l1odCSvGF/sL9Z6kdeLhRu9YrHkzUG6ZgZZrL0k
+uhZkd7w7ifTtabpjHOWP05Uc47PctHVHHZpf6jidscTTIKPLBJSqZmlYkKYaq1uyMnyzCW8wkIRX
+gJ8neF9et7oWr2agQaY7tiGjBE+n6pmLzfkYEVmPdnZHre9DyeSWOcuA/kVoQHEs2i80surRZTF8
+zQaZbYg3v3SvSOs4PY9PgX8Y5EbGVqQNa/nZa1G1aCNLw9eMmhjE4ibgkYTvzcvjs9yA9SLesJdj
+I63j9EweN8gMI/5cjgZs39V/ow4v0ck6hWMamp6UliXE6xYRk7eMcjEM1i5kdyxxegbWypnYl4fH
+ENZirp3QS9K10SloFPA1VO7WpUOTR+7aKcBHKdcYj6x/UvLy+OYaZAC+QbogcgNxptc5PZtp2J69
+A1EfvRhshMJeFu5I+L49UUfvRcjLvQP4G6oTn48aZawyvS0PwzcPtbmxMouuGxqUIi/DNxvbdXsj
+aqNlTaGZhILFjlOKJaj9eyh1qO17dx2UklKPOr1YMg8WoRnApeiFjNoTwEF0PZtnIzTf+yU6xMTz
+qla4HE1osnAKGQ4d6YDFCLWgXoAWRqLOMg0BMr2RwTzNuKdTe0wxyvVFMXVrvK8/Mlz7GOWvo3wS
+9mRk1JI8uxsD99EWX8/L8C0DTiTcE7sVeMiwX555fNNSyB6HmrmWu/GqR3NRXwG+nWI/p/Z4Fj3w
+FgagONs4wkrHDm7bd3/jvh+h2v1SjADOCFy3EfgtUJ9nnedjqKpjdML3LyXfCw3rsfMudPS0sivw
+AAoJPIhSgBYi724DdMv2FexF544zFn2HLM/7GsAElEp2A/pF/xSrd2IahC4URqMhQ2mYRPkE7AnG
+tbcFjgId11oDXrOMG4LO24sT7nN2in32SLhHx1eawSqPGPYr8jU+8OcbbtgjywYFOxr0sXTofsKw
+z0mBexxh2MMSNrrMsE93r+XAO6hD0mxUHhdr7VmUT3QegD5P6x535N2RZAHJhorPJrxxQUdaU8ha
+SKOr4+TBOGSoYlCPLiy+AGxNvPrzj4FvUb7iZCfShel2KaIV07Vo9m0pxpBdrW93pGlScCeK1TlO
+pdKMUlQsraHy4mSSXRamLdMcUITha0EVHd21of4DcE/KPSweX9ruLGOwtwJynDyYgyavVWKfxPNQ
+Ck0Slqbc66Oimm/OQO2UunolvfwoRRGG73myaZflODGZiS4hrN1bYtOKurBfHCDzr5R7zi2y6/AH
+6KKj86uavabLCZ8Sl5ax5B/TdKqbZ1EC/CsF69GMhoaHFjjMBP6TYt97qrXdejmK8PjaOY18LjtW
+oJDBJTns5fQ85qBUqknYpp+lZTqwM3CbQbYFuN6473Jgak81fBZiGb4W4Ico0fjDSGt25m1U+RE6
+3MlxOtKMKh+Gs/ps6qxYiObs7Em6llOXodzXUJqAf/ZUw1ekx9fOVJR8fCPxfqN+jD647fCZtU48
+nkSGaBQqNMiCd9AFxtYoHJR2aPkHwKGEtYa7m7Y4fE81fJXCPJSXNBS4Entc4m10pB2MjtJZeZJO
+7dIK/AmVgu2Aiv/TNgH9L+qjeRiq7LgYGaxYzESxyhll3rccuBQZyhUgLydkrCPoobs3UCZv1kXX
+9iHMQ0HfLKlDffT2QvGNwcAWQB+k8yeoTvEtlMT9HPLsplPaawz9DGcRFtjeENg7cI9lqJwvC/oT
+XgfailKlQhhBeM7YC4Q1z/wsqjQK4UPg/kAZK5uhErTd0Pd1EKrAWhN9Ds1tr4XoezsHeBF4uu3P
+tJ5dEuqAQ4Aj23Qd2KbTXFSnfD2dulH/H+7WmxIwgg7GAAAAAElFTkSuQmCC"><br>
+ 		<h1></h1>
+		<div id="error-message">
+			
+		</div>
+	  <form name="login_form">
+      <h3>Error Logging In</h3>
+	  </form>
+	</div>
+	<div id="terms">
+		<textarea readonly="readonly">No hackery.</textarea>
+	</div>
+</div>
+
+
+</body></html>

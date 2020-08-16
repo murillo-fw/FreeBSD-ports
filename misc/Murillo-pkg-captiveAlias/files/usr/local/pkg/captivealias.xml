@@ -11,7 +11,7 @@
     <name>Captive Alias</name>
     <section>Services</section>
     <tooltiptext>Modify Captive Alias settings</tooltiptext>
-    <url>/pkg_edit.php?xml=captivealias.xml&amp;act=edit&amp;id=0</url>
+    <url>/pkg_edit.php?xml=captivealias.xml&amp;id=0</url>
   </menu>
   <tabs>
     <tab>
@@ -28,6 +28,6 @@
     <type>checkbox</type>
   </field>
   <custom_php_resync_config_command>
-    cativealias_update_aliases();
+    captivealias_update_aliases();
   </custom_php_resync_config_command>
 </packagegui>
