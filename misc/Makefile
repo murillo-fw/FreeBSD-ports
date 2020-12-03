@@ -235,7 +235,6 @@
     SUBDIR += lv
     SUBDIR += lxde-common
     SUBDIR += lxi-tools
-    SUBDIR += Murillo-pkg-captiveAlias
     SUBDIR += magicpoint
     SUBDIR += man.el
     SUBDIR += mate-user-guide

@@ -11,12 +11,12 @@
     <name>Captive Alias</name>
     <section>Services</section>
     <tooltiptext>Modify Captive Alias settings</tooltiptext>
-    <url>/pkg_edit.php?xml=captivealias.xml&amp;id=0</url>
+    <url>/pkg_edit.php?xml=captivealias.xml</url>
   </menu>
   <tabs>
     <tab>
       <text>General</text>
-      <url>/pkg_edit.php?xml=captivealias.xml&amp;id=0</url>
+      <url>/pkg_edit.php?xml=captivealias.xml</url>
        <active/>
        <tab_level/>
     </tab>
