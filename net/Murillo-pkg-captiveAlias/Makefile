@@ -3,7 +3,7 @@
 PORTNAME= Murillo-pkg-captiveAlias
 PORTVERSION= 1.0.0
 PORTREVISION= 1
-CATEGORIES= misc
+CATEGORIES= net
 MASTER_SITES= # empty
 DISTFILES= # empty
 EXTRACT_ONLY= # empty
