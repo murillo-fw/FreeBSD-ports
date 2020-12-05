@@ -168,6 +168,7 @@ function captivealias_update_aliases() {
       clear_subsystem_dirty('aliases');
     }
   }
+  return $changed;
 
 }
 
@@ -224,6 +225,7 @@ function captivealias_bind_sync() {
     }
   }
   write_config("Sync CaptiveAlias config with BIND", true, true);
+  bind_sync();
 }
 
 function captivealias_del_config() {
@@ -352,8 +354,9 @@ function captivealias_get_category_users($catname) {
 
 function captivealias_cron_sync() {
   if (captivealias_get_enabled()) {
-    captivealias_update_aliases();
-    captivealias_bind_sync();
+    if (captivealias_update_aliases()) {
+      captivealias_bind_sync();
+    }
   }
 }
 
