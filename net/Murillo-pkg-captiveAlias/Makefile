@@ -23,13 +23,13 @@ do-extract:
 	${MKDIR} ${WRKSRC}
 
 do-install:
-  ${MKDIR} ${STAGEDIR}${PREFIX}/pkg
+	${MKDIR} ${STAGEDIR}${PREFIX}/pkg
 	${MKDIR} ${STAGEDIR}${DATADIR}
-  ${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/pkg/captivealias.xml \
+	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/pkg/captivealias.xml \
 		${STAGEDIR}${PREFIX}/pkg
-  ${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/pkg/captivealias.inc \
+	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/pkg/captivealias.inc \
 		${STAGEDIR}${PREFIX}/pkg
-  ${INSTALL_DATA} ${FILESDIR}${DATADIR}/info.xml \
+	${INSTALL_DATA} ${FILESDIR}${DATADIR}/info.xml \
 		${STAGEDIR}${DATADIR}
 	@${REINPLACE_CMD} -i '' -e "s|%%PKGVERSION%%|${PKGVERSION}|" \
 		${STAGEDIR}${DATADIR}/info.xml
