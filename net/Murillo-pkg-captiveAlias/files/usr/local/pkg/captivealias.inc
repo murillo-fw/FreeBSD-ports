@@ -226,7 +226,7 @@ function captivealias_bind_sync() {
     }
   }
   write_config("Sync CaptiveAlias config with BIND", true, true);
-  if ($previous == $config['installedpackages']['bindacls']['config']) {
+  if ($previous != $config['installedpackages']['bindacls']['config']) {
     bind_sync();
   }
 }
