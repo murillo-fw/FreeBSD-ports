@@ -9,7 +9,7 @@
  * originally from pfSense (https://www.pfsense.org)
  * Copyright (c) 2006-2020 Rubicon Communications, LLC (Netgate)
  * Copyright (c) 2009-2010 Robert Zelaya
- * Copyright (c) 2013-2020 Bill Meeks
+ * Copyright (c) 2013-2019 Bill Meeks
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,12 +41,12 @@ require("/usr/local/pkg/snort/snort_defs.inc");
 global $config, $g;
 
 $snortdir = SNORTDIR;
-$snortlibdir = SNORT_PBI_BASEDIR . "lib";
+$snortlibdir = SNORT_BASEDIR . "lib";
 $snortlogdir = SNORTLOGDIR;
 $rcdir = RCFILEPREFIX;
 $snort_rules_upd_log = SNORT_RULES_UPD_LOGFILE;
 
-log_error(gettext("[Snort] Snort package uninstall in progress..."));
+syslog(LOG_NOTICE, gettext("[Snort] Snort package uninstall in progress..."));
 
 // Remove our rc.d startup shell script
 unlink_if_exists("{$rcdir}snort.sh");
@@ -54,7 +54,7 @@ unlink_if_exists("{$rcdir}snort.sh");
 // Make sure all active Snort processes are terminated
 // Log a message only if a running process is detected
 if (is_process_running("snort")) {
-	log_error(gettext("[Snort] Snort STOP on all interfaces..."));
+	syslog(LOG_NOTICE, gettext("[Snort] Snort STOP on all interfaces..."));
 	snort_stop_all_interfaces();
 }
 sleep(2);
@@ -69,7 +69,7 @@ unlink_if_exists("{$g['varrun_path']}/snort_*.pid");
 // Make sure all active Barnyard2 processes are terminated
 // Log a message only if a running process is detected
 if (is_process_running("barnyard2")) {
-	log_error(gettext("[Snort] Barnyard2 STOP on all interfaces..."));
+	syslog(LOG_NOTICE, gettext("[Snort] Barnyard2 STOP on all interfaces..."));
 }
 mwexec('/usr/bin/killall -z barnyard2', true);
 sleep(2);
@@ -116,13 +116,13 @@ if (!empty($widgets)) {
 
 // See if we are to clear blocked hosts on uninstall
 if ($config['installedpackages']['snortglobal']['clearblocks'] == 'on') {
-	log_error(gettext("[Snort] Removing all blocked hosts from <snort2c> table..."));
+	syslog(LOG_NOTICE, gettext("[Snort] Removing all blocked hosts from <snort2c> table..."));
 	mwexec("/sbin/pfctl -t snort2c -T flush");
 }
 
 // See if we are to clear Snort log files on uninstall
 if ($config['installedpackages']['snortglobal']['clearlogs'] == 'on') {
-	log_error(gettext("[Snort] Clearing all Snort-related log files..."));
+	syslog(LOG_NOTICE, gettext("[Snort] Clearing all Snort-related log files..."));
 	unlink_if_exists("{$snort_rules_upd_log}");
 	rmdir_recursive($snortlogdir);
 }
@@ -182,17 +182,17 @@ if (($config['installedpackages']['snortglobal']['clearblocks'] != 'off') ||
 /* has elected to not retain the package configuration.   */
 /**********************************************************/
 if ($config['installedpackages']['snortglobal']['forcekeepsettings'] != 'on') {
-	log_error(gettext("[Snort] Not saving settings... all Snort configuration info and logs will be deleted..."));
+	syslog(LOG_NOTICE, gettext("[Snort] Not saving settings... all Snort configuration info and logs will be deleted..."));
 	unset($config['installedpackages']['snortglobal']);
 	unset($config['installedpackages']['snortsync']);
 	unlink_if_exists("{$snort_rules_upd_log}");
 	rmdir_recursive("{$snortlogdir}");
 	rmdir_recursive("{$g['vardb_path']}/snort");
 	write_config("Removing Snort configuration");
-	log_error(gettext("[Snort] The package has been completely removed from this system."));
+	syslog(LOG_NOTICE, gettext("[Snort] The package and its configuration has been completely removed from this system."));
 }
 else {
-	log_error(gettext("[Snort] Package files removed but all Snort configuration info has been retained."));
+	syslog(LOG_NOTICE, gettext("[Snort] Package files removed but all Snort configuration info has been retained."));
 }
 
 return true;
