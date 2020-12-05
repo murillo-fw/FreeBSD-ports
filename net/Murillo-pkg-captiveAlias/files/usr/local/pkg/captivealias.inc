@@ -206,6 +206,7 @@ function captivealias_bind_create_acl($name, $desc) {
 
 function captivealias_bind_sync() {
   global $config;
+  $previous = $config['installedpackages']['bindacls']['config'];
   foreach (captivealias_get_categories() as $catname) {
     $catacl = captivealias_get_category_acl($catname);
     captivealias_bind_create_acl($catname, $catname, array());
@@ -225,7 +226,9 @@ function captivealias_bind_sync() {
     }
   }
   write_config("Sync CaptiveAlias config with BIND", true, true);
-  bind_sync();
+  if ($previous == $config['installedpackages']['bindacls']['config']) {
+    bind_sync();
+  }
 }
 
 function captivealias_del_config() {
@@ -354,9 +357,8 @@ function captivealias_get_category_users($catname) {
 
 function captivealias_cron_sync() {
   if (captivealias_get_enabled()) {
-    if (captivealias_update_aliases()) {
-      captivealias_bind_sync();
-    }
+    captivealias_update_aliases();
+    captivealias_bind_sync();
   }
 }
 
