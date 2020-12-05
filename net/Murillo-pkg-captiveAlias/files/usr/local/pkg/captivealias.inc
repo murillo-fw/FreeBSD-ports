@@ -31,7 +31,7 @@ function captivealias_update_aliases() {
 
   $a_aliases = &$config['aliases']['alias'];
   $a_cp = &$config['captiveportal'];
-  $cpzone = $calconfig['cpzone'];
+  $cpzone = $config['installedpackages']['captivealias']['cpzone'];
   $cpzoneid = $a_cp[$cpzone]['zoneid'];
   $db_path = "{$g['vardb_path']}/captiveportal{$cpzone}.db";
   $createquery = "CREATE TABLE IF NOT EXISTS captiveportal (" .
@@ -112,6 +112,16 @@ function captivealias_update_aliases() {
     $DB->close();
   }
   $changed = false;
+  /* Clear aliases that start with user_ */
+  if (is_array($a_aliases)) {
+    foreach ($a_aliases as &$alias) {
+      if (strcmp("user_", substr($alias['name'], 0, 4)) == 0) { // strcmp may not be needed
+        unset($alias['address']);
+        $changed = true;
+      }
+    }
+  }
+
   foreach ($cpdb as $cpent) {
     $create_new_alias = true;
     $ip = $cpent['ip'];
@@ -119,8 +129,8 @@ function captivealias_update_aliases() {
     /* Check if entry already exists */
     if (is_array($a_aliases)) {
       foreach ($a_aliases as &$alias) {
-        if ($alias['name'] == $user) {
-          /* Username already exists... */
+        if (strcmp($alias['name'], $user) == 0) {
+          /* Username already exists... check if IP is contained */
           if (!stristr($alias['address'], $ip)) {
             /* IP is wrong, update it */
             $alias['address'] .= ' ' . $ip;
@@ -144,7 +154,10 @@ function captivealias_update_aliases() {
       $changed = true;
     }
   }
-  write_config("Add CaptiveAlias aliases", true, false);
+
+  if ($changed) {
+    write_config("Add CaptiveAlias aliases", true, false);
+  }
 
   /* Reload Firewall if we have a change */
   if ($changed) {
@@ -155,6 +168,7 @@ function captivealias_update_aliases() {
       clear_subsystem_dirty('aliases');
     }
   }
+
 }
 
 function captivealias_bind_get_acl_index($name) {
@@ -230,11 +244,7 @@ function captivealias_init_config() {
 
 function captivealias_get_enabled() {
   global $config;
-  $aliasservice_enabled = false;
-  if ($config['installedpackages']['captivealias']['enable_captivealias'] == "true") {
-    $aliasservice_enabled = true;
-  }
-  return $aliasservice_enabled;
+  return($config['installedpackages']['captivealias']['enable_captivealias'] == "true");
 }
 
 function captivealias_set_enable() {
@@ -338,6 +348,13 @@ function captivealias_get_category_users($catname) {
     $output[] = $val;
   }
   return $output;
+}
+
+function captivealias_cron_sync() {
+  if (captivealias_get_enabled()) {
+    captivealias_update_aliases();
+    captivealias_bind_sync();
+  }
 }
 
 ?>
