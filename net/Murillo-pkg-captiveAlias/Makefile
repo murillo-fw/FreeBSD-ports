@@ -1,23 +1,23 @@
 # $FreeBSD$
 
-PORTNAME= Murillo-pkg-captiveAlias
-PORTVERSION= 1.0.1
-PORTREVISION= 1
-CATEGORIES= net
+PORTNAME=	Murillo-pkg-captiveAlias
+PORTVERSION=	1.0.1
+PORTREVISION=	1
+CATEGORIES=	net
 MASTER_SITES= # empty
 DISTFILES= # empty
 EXTRACT_ONLY= # empty
 
-MAINTINER= murillo.secure@gmail.com
-COMMENT= Murillo package captive alias
+MAINTINER=	murillo.secure@gmail.com
+COMMENT=	Murillo package captive alias
 
-LICENSE= APACHE20
+LICENSE=	APACHE20
 
-NO_BUILD= yes
-NO_MTREE= yes
+NO_BUILD=	yes
+NO_MTREE=	yes
 
-SUB_FILES = pkg-install pkg-deinstall
-SUB_LIST= PORTNAME=${PORTNAME}
+SUB_FILES=	pkg-install pkg-deinstall
+SUB_LIST=	PORTNAME=${PORTNAME}
 
 do-extract:
 	${MKDIR} ${WRKSRC}
