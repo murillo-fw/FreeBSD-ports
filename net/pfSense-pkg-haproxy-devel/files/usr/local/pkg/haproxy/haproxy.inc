@@ -812,7 +812,7 @@ function write_backend($configpath, $fd, $name, $pool, $backendsettings) {
 		}
 
 		if ($pool["cookie_attribute_secure"] == 'yes'){
-			fwrite ($fd, "\trspirep ^(Set-Cookie:((?!;\\ secure).)*)$ \\1;\ secure if { ssl_fc }\n");
+			fwrite ($fd, "\thttp-response replace-header Set-Cookie \"^((?:(?!; [Ss]ecure\b).)*)\\$\" \"\\1; secure\" if { ssl_fc }\n");
 		}
 
 		if ($pool['stats_enabled'] == 'yes') {
@@ -1228,14 +1228,21 @@ function write_backend($configpath, $fd, $name, $pool, $backendsettings) {
 
 			$unix_socket = false;
 			$servers = array();
+			$serverprefix = haproxy_utils::haproxy_hostname_get_prefix($be['address']);
+			$serveraddress = haproxy_utils::haproxy_hostname_strip_prefix($be['address']);
+			if ($addrprefix && $serverprefix && $serverprefix !== $addrprefix) {
+				continue; // skip the server if its not 'usable' in this transparent-backend
+			}
 			if ($be['forwardto'] && $be['forwardto'] != "") {
 				$unix_socket = true;
 				$servers[] = "/{$be['forwardto']}.socket send-proxy-v2-ssl-cn";
 			} else {
-				if (is_ipaddr($be['address']) || $use_haproxyresolvers) {
-					$servers[] = $be['address'];
-				} elseif (is_hostname($be['address'])) {
-					$dnsresult_servers = haproxy_utils::query_dns($be['address'], $dnsquerytype);
+				if (in_array($serverprefix, array('unix@'))) {
+					$servers[] = $serveraddress;
+				} elseif (is_ipaddr($serveraddress) || $use_haproxyresolvers) {
+					$servers[] = $serveraddress;
+				} elseif (is_hostname($serveraddress)) {
+					$dnsresult_servers = haproxy_utils::query_dns($serveraddress, $dnsquerytype);
 					foreach($dnsresult_servers as $dnsresult_server){
 						$servers[] = $dnsresult_server['data'];
 					}
@@ -1252,14 +1259,16 @@ function write_backend($configpath, $fd, $name, $pool, $backendsettings) {
 						continue;
 					}
 				} else {
-					if (!$unix_socket) {
+					if (!$unix_socket && !$serverprefix) {
 						// place the ipv4@ or ipv6@ before the address, but not when using a unix socket
+						// or a prefix was already specified by the user.
 						$server = $addrprefix . $server;
 					}
 				}
 				if (!empty($be['port'])) {
 					$server = $server . ":" . $be['port'];
 				}
+				$server = $serverprefix . $server;
 				$servername = $be['name'];
 				$id = "";
 				if (count($servers) > 1) {
@@ -1512,6 +1521,45 @@ function haproxy_writeconf($configpath) {
 		fwrite ($fd, "\tchroot\t\t\t\t$chroot_dir\n");
 		fwrite ($fd, "\tdaemon\n");
 
+		/* ssl-default-bind-ciphersuites and ssl-default-server-ciphersuites is only available
+		 *  when support for OpenSSL was built in and OpenSSL 1.1.1 or later was used to build HAProxy. */
+		if (OPENSSL_VERSION_NUMBER >= 269488128) {
+			$openssl111 = true;
+		} else {
+			$openssl111 = false;
+		}
+
+		if ($a_global['sslcompatibilitymode'] == 'modern') {
+			/* https://ssl-config.mozilla.org/#server=haproxy&version=2.1&config=modern&openssl=1.1.1d&guideline=5.4 */
+			if ($openssl111) {
+				fwrite ($fd, "\tssl-default-bind-ciphersuites\tTLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256\n");
+				fwrite ($fd, "\tssl-default-server-ciphersuites\tTLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256\n");
+			}
+			fwrite ($fd, "\tssl-default-bind-options\tno-sslv3 no-tlsv10 no-tlsv11 no-tlsv12 no-tls-tickets\n");
+			fwrite ($fd, "\tssl-default-server-options\tno-sslv3 no-tlsv10 no-tlsv11 no-tlsv12 no-tls-tickets\n");
+
+		} elseif ($a_global['sslcompatibilitymode'] == 'intermediate') {
+			/* https://ssl-config.mozilla.org/#server=haproxy&version=2.1&config=intermediate&openssl=1.1.1d&guideline=5.4 */
+			if ($openssl111) {
+				fwrite ($fd, "\tssl-default-bind-ciphersuites\tTLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256\n");
+				fwrite ($fd, "\tssl-default-server-ciphersuites\tTLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256\n");
+			}
+			fwrite ($fd, "\tssl-default-bind-ciphers\tECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384\n");
+			fwrite ($fd, "\tssl-default-bind-options\tno-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets\n");
+			fwrite ($fd, "\tssl-default-server-ciphers\tECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384\n");
+			fwrite ($fd, "\tssl-default-server-options\tno-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets\n");
+		} elseif ($a_global['sslcompatibilitymode'] == 'old') {
+			/* https://ssl-config.mozilla.org/#server=haproxy&version=2.1&config=old&openssl=1.1.1d&guideline=5.4 */
+			if ($openssl111) {
+				fwrite ($fd, "\tssl-default-bind-ciphersuites\tTLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256\n");
+				fwrite ($fd, "\tssl-default-server-ciphersuites\tTLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256\n");
+			}
+			fwrite ($fd, "\tssl-default-bind-ciphers\tECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA256:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA\n");
+			fwrite ($fd, "\tssl-default-bind-options\tno-sslv3 no-tls-tickets\n");
+			fwrite ($fd, "\tssl-default-server-ciphers\tECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA256:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA\n");
+			fwrite ($fd, "\tssl-default-server-options\tno-sslv3 no-tls-tickets\n");
+
+		}
 		if ($a_global['ssldefaultdhparam']) {
 			fwrite ($fd, "\ttune.ssl.default-dh-param\t{$a_global['ssldefaultdhparam']}\n");
 		}

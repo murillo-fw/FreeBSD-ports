@@ -28,7 +28,7 @@
 var pfBlockerNGFailedTimer;
 var pfBlockerNGWidgetTimer;
 
-<!-- update timers (10000 ms = 10 seconds, 60000 ms = 1 minute, 300000 ms = 5 mins) -->
+/* update timers (10000 ms = 10 seconds, 60000 ms = 1 minute, 300000 ms = 5 mins) */
 var pfBlockerNGupdateFailedDelay	= 300000;
 var pfBlockerNGupdateWidgetDelay	= 10000;
 
@@ -166,7 +166,7 @@ events.push(function() {
 
 	$('[id^=pfblockerngclearicon]').click(function(event) {
 		$('<div></div>').appendTo('body')
-		.html('<div><h6>Select which Packet Counts to clear:</h6></div>')
+		.html('<div><h6>Select which Packet Counts to clear:</h6><small>Note: Selecting \'IP\' will clear all pfSense counters.</small></div>')
 		.dialog({
 			modal: true,
 			autoOpen: true,

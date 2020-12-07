@@ -8,7 +8,7 @@
  * 
  * originally from pfSense (https://www.pfsense.org)
  * Copyright (c) 2016-2020 Rubicon Communications, LLC (Netgate)
- * Copyright (c) 2015-2019 BBcan177@gmail.com
+ * Copyright (c) 2015-2020 BBcan177@gmail.com
  * All rights reserved.
  *
  * Portions of this code are based on original work done for
