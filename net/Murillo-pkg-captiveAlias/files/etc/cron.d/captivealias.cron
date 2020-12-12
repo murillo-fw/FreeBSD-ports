@@ -1,0 +1,1 @@
+*	*	*	*	*	root	/usr/bin/nice -n20 /usr/local/bin/php -r 'require_once("captivealias.inc"); captivealias_cron_sync();'

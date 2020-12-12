@@ -2,7 +2,7 @@
 
 PORTNAME=	Murillo-pkg-captiveAlias
 PORTVERSION=	1.0.1
-PORTREVISION=	4
+PORTREVISION=	6
 CATEGORIES=	net
 MASTER_SITES= # empty
 DISTFILES= # empty
@@ -24,6 +24,7 @@ do-extract:
 
 do-install:
 	${MKDIR} ${STAGEDIR}${PREFIX}/pkg
+	${MKDIR} ${STAGEDIR}/etc/cron.d
 	${MKDIR} ${STAGEDIR}${DATADIR}
 	${INSTALL_DATA} -m 0644 ${FILESDIR}${PREFIX}/pkg/captivealias.xml \
 		${STAGEDIR}${PREFIX}/pkg
@@ -31,6 +32,8 @@ do-install:
 		${STAGEDIR}${PREFIX}/pkg
 	${INSTALL_DATA} ${FILESDIR}${DATADIR}/info.xml \
 		${STAGEDIR}${DATADIR}
+	${INSTALL_DATA} -m 0644 ${FILESDIR}/etc/cron.d/captivealias.cron \
+		${STAGEDIR}/etc/cron.d
 	@${REINPLACE_CMD} -i '' -e "s|%%PKGVERSION%%|${PKGVERSION}|" \
 		${STAGEDIR}${DATADIR}/info.xml
 

@@ -115,7 +115,7 @@ function captivealias_update_aliases() {
   /* Clear aliases that start with user_ */
   if (is_array($a_aliases)) {
     foreach ($a_aliases as &$alias) {
-      if (strcmp("user_", substr($alias['name'], 0, 4)) == 0) { // strcmp may not be needed
+      if (strcmp("user_", substr($alias['name'], 0, 5)) == 0) { // strcmp may not be needed
         unset($alias['address']);
         $changed = true;
       }
@@ -355,10 +355,17 @@ function captivealias_get_category_users($catname) {
   return $output;
 }
 
-function captivealias_cron_sync() {
+function captivealias_sync() {
   if (captivealias_get_enabled()) {
     captivealias_update_aliases();
     captivealias_bind_sync();
+  }
+}
+
+function captivealias_cron_sync() {
+  for ($x = 0; $x < 6; $x++) {
+    captivealias_sync();
+    sleep(8);
   }
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <packagegui>
   <name>captiveAlias</name>
-  <version>0.0.1</version>
+  <version>1.0.1</version>
   <title>Captive Alias</title>
   <include_file>/usr/local/pkg/captivealias.inc</include_file>
   <backup_file></backup_file>
@@ -28,6 +28,6 @@
     <type>checkbox</type>
   </field>
   <custom_php_resync_config_command>
-    captivealias_update_aliases();
+    captivealias_sync();
   </custom_php_resync_config_command>
 </packagegui>
