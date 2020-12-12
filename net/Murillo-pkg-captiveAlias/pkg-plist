@@ -1,3 +1,4 @@
 pkg/captivealias.xml
 pkg/captivealias.inc
+/etc/cron.d/captivealias.cron
 %%DATADIR%%/info.xml

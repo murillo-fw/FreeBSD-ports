@@ -112,12 +112,12 @@ function captivealias_update_aliases() {
     $DB->close();
   }
   $changed = false;
+  $oldConfig = $a_aliases;
   /* Clear aliases that start with user_ */
   if (is_array($a_aliases)) {
     foreach ($a_aliases as &$alias) {
       if (strcmp("user_", substr($alias['name'], 0, 5)) == 0) { // strcmp may not be needed
-        unset($alias['address']);
-        $changed = true;
+        unset($alias);
       }
     }
   }
@@ -134,7 +134,6 @@ function captivealias_update_aliases() {
           if (!stristr($alias['address'], $ip)) {
             /* IP is wrong, update it */
             $alias['address'] .= ' ' . $ip;
-            $changed = true;
             $create_new_alias = false;
           } else {
             /* Username and IP match. */
@@ -151,16 +150,13 @@ function captivealias_update_aliases() {
         'detail' => 'DO NOT EDIT THIS ALIAS',
         'descr' => 'Added by CaptiveAlias'
       );
-      $changed = true;
     }
   }
 
+  $changed = $a_aliases == $oldConfig;
+
   if ($changed) {
     write_config("Add CaptiveAlias aliases", true, false);
-  }
-
-  /* Reload Firewall if we have a change */
-  if ($changed) {
     $retval = 0;
     $retval |= filter_configure();
 

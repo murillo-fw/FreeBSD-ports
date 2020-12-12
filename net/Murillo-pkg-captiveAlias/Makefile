@@ -2,7 +2,7 @@
 
 PORTNAME=	Murillo-pkg-captiveAlias
 PORTVERSION=	1.0.1
-PORTREVISION=	6
+PORTREVISION=	7
 CATEGORIES=	net
 MASTER_SITES= # empty
 DISTFILES= # empty
