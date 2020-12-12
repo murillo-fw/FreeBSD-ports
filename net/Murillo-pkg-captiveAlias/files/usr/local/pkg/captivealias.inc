@@ -113,11 +113,15 @@ function captivealias_update_aliases() {
   }
   $changed = false;
   $oldConfig = $a_aliases;
-  /* Clear aliases that start with user_ */
+  /* Delete aliases that start with user_ */
   if (is_array($a_aliases)) {
     foreach ($a_aliases as &$alias) {
       if (strcmp("user_", substr($alias['name'], 0, 5)) == 0) { // strcmp may not be needed
-        unset($alias);
+        foreach ($a_aliases as $key => $val) {
+          if ($val['name'] == $alias['name']) {
+            \array_splice($a_aliases, $key, 1);
+          }
+        }
       }
     }
   }
